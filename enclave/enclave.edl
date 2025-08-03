@@ -1,0 +1,28 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+
+    trusted {
+        /* define ECALLs here. */
+        public sgx_status_t ecall_init_contract_verifier(void);
+        public sgx_status_t ecall_verify_contract_execution(
+            [in, count=code_size] uint8_t* contract_code,
+            size_t code_size,
+            [in, count=input_size] uint8_t* input_data,
+            size_t input_size,
+            [out, count=result_size] uint8_t* execution_result,
+            size_t result_size,
+            [out] uint64_t* gas_used
+        );
+        public sgx_status_t ecall_get_enclave_measurement(
+            [out, count=32] uint8_t* measurement
+        );
+        public sgx_status_t ecall_destroy_enclave(void);
+    };
+
+    untrusted {
+        /* define OCALLs here. */
+        void ocall_print_string([in, string] const char* str);
+        void ocall_print_error([in, string] const char* str);
+        uint64_t ocall_get_timestamp(void);
+    };
+};

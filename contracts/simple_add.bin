@@ -1,0 +1,13 @@
+# This is a binary representation of a simple addition contract
+# PUSH 10, PUSH 20, ADD, HALT
+
+# The actual binary content would be:
+# 01 0A 00 00 00 00 00 00 00  (PUSH 10)
+# 01 14 00 00 00 00 00 00 00  (PUSH 20) 
+# 03                          (ADD)
+# 18                          (HALT)
+
+# For demonstration purposes, this file contains the hex representation
+# In a real implementation, this would be actual binary data
+
+010A000000000000000114000000000000000318

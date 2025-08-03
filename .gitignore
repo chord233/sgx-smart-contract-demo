@@ -1,0 +1,55 @@
+# Build artifacts
+*.o
+*.so
+*.a
+bin/
+obj/
+tmp/
+logs/
+
+# SGX generated files
+enclave_t.h
+enclave_t.c
+enclave_u.h
+enclave_u.c
+.config_*
+
+# Test artifacts
+tests/test_runner
+tests/*.o
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+*.temp
+
+# Debug files
+*.debug
+*.log
+
+# Private keys (keep sample key for demo)
+# enclave_private.pem
+
+# Data files that might contain sensitive info
+data/*.bin
+test_data/*.bin
+!data/simple_add.bin
+!test_data/add_test.bin
+!test_data/factorial_test.bin
+!test_data/hash_test.bin
+!test_data/invalid_test.bin
+!test_data/large_test.bin
