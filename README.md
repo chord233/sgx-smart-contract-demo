@@ -1,127 +1,129 @@
-# Intel SGX 智能合约验证 TEE Demo
+# Intel SGX Smart Contract Verification TEE Demo
 
-这是一个使用Intel SGX技术验证智能合约在可信执行环境(TEE)中数据完整性的演示项目。
+This is a demonstration project that uses Intel SGX technology to verify smart contract data integrity in a Trusted Execution Environment (TEE).
 
-## 项目概述
+## Project Overview
 
-本项目展示了如何使用Intel SGX创建一个安全的可信执行环境，在其中验证智能合约的执行结果和数据完整性。SGX enclave提供了硬件级别的安全保障，确保智能合约的执行过程不被篡改。
+This project demonstrates how to use Intel SGX to create a secure trusted execution environment for verifying smart contract execution results and data integrity. SGX enclave provides hardware-level security guarantees, ensuring that smart contract execution processes cannot be tampered with.
 
-## 技术架构
+## Technical Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    应用层 (App)                              │
+│                    Application Layer                        │
 ├─────────────────────────────────────────────────────────────┤
-│                SGX Enclave (可信执行环境)                    │
+│                SGX Enclave (TEE)                           │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
-│  │  智能合约验证器   │  │   数据完整性检查  │  │  密钥管理模块  │ │
+│  │Contract Verifier│  │Data Integrity   │  │Key Management│ │
+│  │                 │  │Checker          │  │Module        │ │
 │  └─────────────────┘  └─────────────────┘  └──────────────┘ │
 ├─────────────────────────────────────────────────────────────┤
-│                Intel SGX 硬件层                             │
+│                Intel SGX Hardware Layer                     │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 核心功能
+## Core Features
 
-1. **智能合约验证**: 在SGX enclave中验证智能合约的执行逻辑
-2. **数据完整性保护**: 使用SGX保护敏感数据不被篡改
-3. **远程证明**: 提供enclave的远程证明功能
-4. **安全通信**: 建立与外部系统的安全通信通道
+1. **Smart Contract Verification**: Verify smart contract execution logic within SGX enclave
+2. **Data Integrity Protection**: Use SGX to protect sensitive data from tampering
+3. **Remote Attestation**: Provide remote attestation functionality for enclave
+4. **Secure Communication**: Establish secure communication channels with external systems
 
-## 项目结构
+## Project Structure
 
 ```
 sgx-smart-contract-demo/
-├── README.md                 # 项目说明文档
-├── Makefile                  # 构建脚本
-├── app/                      # 应用程序代码
-│   ├── main.cpp             # 主程序入口
-│   ├── app.h                # 应用程序头文件
-│   └── sgx_utils.cpp        # SGX工具函数
-├── enclave/                  # SGX Enclave代码
-│   ├── enclave.cpp          # Enclave主要逻辑
-│   ├── enclave.h            # Enclave头文件
-│   ├── enclave.edl          # Enclave定义语言文件
-│   ├── contract_verifier.cpp # 智能合约验证器
-│   └── crypto_utils.cpp     # 加密工具函数
-├── contracts/                # 示例智能合约
-│   ├── simple_contract.sol  # 简单智能合约示例
-│   └── voting_contract.sol  # 投票合约示例
-├── tests/                    # 测试文件
-│   ├── test_enclave.cpp     # Enclave测试
-│   └── test_contracts.cpp   # 合约测试
-└── scripts/                  # 辅助脚本
-    ├── setup.sh             # 环境设置脚本
-    └── run_demo.sh          # 运行演示脚本
+├── README.md                 # Project documentation
+├── README_EN.md              # English documentation
+├── Makefile                  # Build script
+├── app/                      # Application code
+│   ├── main.cpp             # Main program entry
+│   ├── app.h                # Application header file
+│   └── sgx_utils.cpp        # SGX utility functions
+├── enclave/                  # SGX Enclave code
+│   ├── enclave.cpp          # Enclave main logic
+│   ├── enclave.h            # Enclave header file
+│   ├── enclave.edl          # Enclave Definition Language file
+│   ├── contract_verifier.cpp # Smart contract verifier
+│   └── crypto_utils.cpp     # Cryptographic utility functions
+├── contracts/                # Sample smart contracts
+│   ├── simple_contract.sol  # Simple smart contract example
+│   └── voting_contract.sol  # Voting contract example
+├── tests/                    # Test files
+│   ├── test_enclave.cpp     # Enclave tests
+│   └── test_contracts.cpp   # Contract tests
+└── scripts/                  # Utility scripts
+    ├── setup.sh             # Environment setup script
+    └── run_demo.sh          # Demo execution script
 ```
 
-## 环境要求
+## Requirements
 
-- Intel SGX 支持的CPU
+- Intel SGX supported CPU
 - Ubuntu 24.04 LTS
 - Intel SGX SDK 2.15+
 - Intel SGX PSW (Platform Software)
 - GCC 7.5+
 - Make
 
-## 快速开始
+## Quick Start
 
-### 1. 安装依赖
+### 1. Install Dependencies
 
 ```bash
-# 安装SGX SDK和PSW
+# Install SGX SDK and PSW
 ./scripts/setup.sh
 
-# 设置环境变量
+# Set environment variables
 source /opt/intel/sgxsdk/environment
 ```
 
-### 2. 编译项目
+### 2. Build Project
 
 ```bash
 make clean
 make
 ```
 
-### 3. 运行演示
+### 3. Run Demo
 
 ```bash
 ./scripts/run_demo.sh
 ```
 
-## 核心特性
+## Core Features
 
-### 🔒 安全性保障
-- **硬件级保护**: 利用Intel SGX提供的硬件级安全保障
-- **内存加密**: Enclave内存自动加密，防止内存转储攻击
-- **完整性验证**: 确保代码和数据的完整性
+### 🔒 Security Guarantees
+- **Hardware-level Protection**: Leverage Intel SGX hardware-level security guarantees
+- **Memory Encryption**: Enclave memory is automatically encrypted, preventing memory dump attacks
+- **Integrity Verification**: Ensure code and data integrity
 
-### 🚀 性能优化
-- **最小化Enclave大小**: 只在Enclave中执行关键安全操作
-- **高效的数据传输**: 优化应用程序与Enclave之间的数据交换
-- **并发处理**: 支持多线程并发验证
+### 🚀 Performance Optimization
+- **Minimized Enclave Size**: Execute only critical security operations within the enclave
+- **Efficient Data Transfer**: Optimize data exchange between application and enclave
+- **Concurrent Processing**: Support multi-threaded concurrent verification
 
-### 🔧 易用性
-- **简洁的API**: 提供易于使用的智能合约验证接口
-- **详细的文档**: 完整的使用说明和API文档
-- **示例代码**: 包含多个实际使用场景的示例
+### 🔧 Usability
+- **Simple API**: Provide easy-to-use smart contract verification interface
+- **Detailed Documentation**: Complete usage instructions and API documentation
+- **Example Code**: Include multiple real-world usage scenario examples
 
-## 使用场景
+## Use Cases
 
-1. **DeFi协议验证**: 验证去中心化金融协议的执行正确性
-2. **供应链追踪**: 在可信环境中验证供应链数据
-3. **投票系统**: 确保电子投票的隐私性和完整性
-4. **身份验证**: 在TEE中安全处理身份认证数据
+1. **DeFi Protocol Verification**: Verify the execution correctness of decentralized finance protocols
+2. **Supply Chain Tracking**: Verify supply chain data in a trusted environment
+3. **Voting Systems**: Ensure privacy and integrity of electronic voting
+4. **Identity Authentication**: Securely process identity authentication data in TEE
 
-## API 文档
+## API Documentation
 
-### Enclave 接口
+### Enclave Interface
 
 ```cpp
-// 初始化智能合约验证器
+// Initialize smart contract verifier
 sgx_status_t init_contract_verifier();
 
-// 验证智能合约执行结果
+// Verify smart contract execution result
 sgx_status_t verify_contract_execution(
     const uint8_t* contract_code,
     size_t code_size,
@@ -131,7 +133,7 @@ sgx_status_t verify_contract_execution(
     size_t* result_size
 );
 
-// 生成执行证明
+// Generate execution proof
 sgx_status_t generate_execution_proof(
     const uint8_t* execution_hash,
     uint8_t* proof,
@@ -139,54 +141,49 @@ sgx_status_t generate_execution_proof(
 );
 ```
 
-## 安全考虑
+## Security Considerations
 
-1. **侧信道攻击防护**: 实现了对时序攻击和功耗分析的防护
-2. **密钥管理**: 使用SGX密封功能安全存储密钥
-3. **远程证明**: 支持Intel Attestation Service进行远程证明
-4. **回滚攻击防护**: 实现单调计数器防止回滚攻击
+1. **Side-channel Attack Protection**: Implemented protection against timing attacks and power analysis
+2. **Key Management**: Use SGX sealing functionality to securely store keys
+3. **Remote Attestation**: Support Intel Attestation Service for remote attestation
+4. **Rollback Attack Protection**: Implement monotonic counters to prevent rollback attacks
 
-## 性能基准
+## Performance Benchmarks
 
-| 操作 | 延迟 | 吞吐量 |
-|------|------|--------|
-| 合约验证 | < 1ms | 10,000 TPS |
-| 数据封装 | < 0.1ms | 100,000 ops/s |
-| 远程证明 | < 100ms | 100 证明/s |
+| Operation | Latency | Throughput |
+|-----------|---------|------------|
+| Contract Verification | < 1ms | 10,000 TPS |
+| Data Sealing | < 0.1ms | 100,000 ops/s |
+| Remote Attestation | < 100ms | 100 proofs/s |
 
-## 贡献指南
+## Contributing
 
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
+1. Fork this project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 许可证
+## License
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 联系方式
+## Contact
 
-- **作者**: Chord
-- **邮箱**: chord244@gmail.com
+- **Author**: Chord
+- **Email**: chord244@gmail.com
 - **GitHub**: https://github.com/chord233
 - **Twitter**: @chord244
+- **LinkedIn**: https://linkedin.com/in/chord233
 
-## 致谢
+## Acknowledgments
 
-- Intel SGX 开发团队
-- 开源社区的贡献者们
-- 所有测试和反馈的用户
-
----
-
-## 语言版本
-
-- [中文版本 (Chinese)](README.md)
-- [English Version](README_EN.md)
-- [技术文档中文版 (Technical Documentation Chinese)](TECHNICAL.md)
-- [Technical Documentation English](TECHNICAL_EN.md)
+- Intel SGX development team
+- Open source community contributors
+- All users who provided testing and feedback
 
 ---
 
+**Language Versions:**
+- [English Version (Main)](README.md)
+- [中文版本 (Chinese)](README_CN.md)
