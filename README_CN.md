@@ -1,6 +1,8 @@
 # Intel SGX 智能合约验证 TEE Demo
 
-这是一个使用Intel SGX技术验证智能合约在可信执行环境(TEE)中数据完整性的演示项目。
+**注意：这是一个用于教育目的的简化演示版本。**
+
+这是一个使用Intel SGX技术展示智能合约在可信执行环境(TEE)中基本执行模拟的演示项目。项目包含了证明生成的模拟实现和简化的合约执行，用于演示SGX的基本功能。
 
 ## 项目概述
 
@@ -21,12 +23,13 @@
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 核心功能
+## 演示功能
 
-1. **智能合约验证**: 在SGX enclave中验证智能合约的执行逻辑
-2. **数据完整性保护**: 使用SGX保护敏感数据不被篡改
-3. **远程证明**: 提供enclave的远程证明功能
-4. **安全通信**: 建立与外部系统的安全通信通道
+本简化演示版本包含以下功能：
+- 基本智能合约执行模拟
+- 简单证明生成（模拟实现）
+- Enclave测量值获取
+- 基本远程证明报告创建
 
 ## 项目结构
 
@@ -44,15 +47,20 @@ sgx-smart-contract-demo/
 │   ├── enclave.edl          # Enclave定义语言文件
 │   ├── contract_verifier.cpp # 智能合约验证器
 │   └── crypto_utils.cpp     # 加密工具函数
-├── contracts/                # 示例智能合约
-│   ├── simple_contract.sol  # 简单智能合约示例
-│   └── voting_contract.sol  # 投票合约示例
-├── tests/                    # 测试文件
-│   ├── test_enclave.cpp     # Enclave测试
-│   └── test_contracts.cpp   # 合约测试
-└── scripts/                  # 辅助脚本
-    ├── setup.sh             # 环境设置脚本
-    └── run_demo.sh          # 运行演示脚本
+├── bin/                      # 可执行脚本和二进制文件
+│   ├── run.sh               # 主运行脚本
+│   └── run_demo.sh          # 演示执行脚本
+├── build/                    # 构建脚本和工具
+│   └── build.sh             # 构建脚本
+├── config/                   # 配置文件
+│   └── config.json          # 项目配置
+├── contracts/                # 示例智能合约和测试数据
+│   ├── add_test.bin         # 加法测试二进制
+│   ├── sample_contract.txt  # 示例合约文本
+│   └── simple_add.bin       # 简单加法合约二进制
+└── docs/                     # 文档
+    ├── DEMO_VERSION.md      # 演示版本信息
+    └── QUICK_START.md       # 快速开始指南
 ```
 
 ## 环境要求
@@ -66,15 +74,10 @@ sgx-smart-contract-demo/
 
 ## 快速开始
 
-### 1. 安装依赖
+### 1. 前提条件
 
-```bash
-# 安装SGX SDK和PSW
-./scripts/setup.sh
-
-# 设置环境变量
-source /opt/intel/sgxsdk/environment
-```
+- Intel SGX SDK 已安装并配置
+- 环境变量已设置：`source /opt/intel/sgxsdk/environment`
 
 ### 2. 编译项目
 
@@ -86,7 +89,11 @@ make
 ### 3. 运行演示
 
 ```bash
-./scripts/run_demo.sh
+# 运行演示
+./bin/run_demo.sh
+
+# 或使用主运行脚本
+./bin/run.sh
 ```
 
 ## 核心特性

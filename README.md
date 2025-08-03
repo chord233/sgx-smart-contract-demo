@@ -1,6 +1,8 @@
 # Intel SGX Smart Contract Verification TEE Demo
 
-This is a demonstration project that uses Intel SGX technology to verify smart contract data integrity in a Trusted Execution Environment (TEE).
+**Note: This is a simplified demonstration version for educational purposes.**
+
+This is a demonstration project that uses Intel SGX technology to show basic smart contract execution simulation in a Trusted Execution Environment (TEE). The project includes mock implementations for proof generation and simplified contract execution to demonstrate SGX capabilities.
 
 ## Project Overview
 
@@ -46,15 +48,20 @@ sgx-smart-contract-demo/
 │   ├── enclave.edl          # Enclave Definition Language file
 │   ├── contract_verifier.cpp # Smart contract verifier
 │   └── crypto_utils.cpp     # Cryptographic utility functions
-├── contracts/                # Sample smart contracts
-│   ├── simple_contract.sol  # Simple smart contract example
-│   └── voting_contract.sol  # Voting contract example
-├── tests/                    # Test files
-│   ├── test_enclave.cpp     # Enclave tests
-│   └── test_contracts.cpp   # Contract tests
-└── scripts/                  # Utility scripts
-    ├── setup.sh             # Environment setup script
-    └── run_demo.sh          # Demo execution script
+├── bin/                      # Executable scripts and binaries
+│   ├── run.sh               # Main run script
+│   └── run_demo.sh          # Demo execution script
+├── build/                    # Build scripts and tools
+│   └── build.sh             # Build script
+├── config/                   # Configuration files
+│   └── config.json          # Project configuration
+├── contracts/                # Sample smart contracts and test data
+│   ├── add_test.bin         # Addition test binary
+│   ├── sample_contract.txt  # Sample contract text
+│   └── simple_add.bin       # Simple addition contract binary
+└── docs/                     # Documentation
+    ├── DEMO_VERSION.md      # Demo version information
+    └── QUICK_START.md       # Quick start guide
 ```
 
 ## Requirements
@@ -68,27 +75,22 @@ sgx-smart-contract-demo/
 
 ## Quick Start
 
-### 1. Install Dependencies
+### 1. Prerequisites
+
+- Intel SGX SDK installed and configured
+- Environment variables set: `source /opt/intel/sgxsdk/environment`
+
+### 2. Build and Run
 
 ```bash
-# Install SGX SDK and PSW
-./scripts/setup.sh
+# Build the demo
+make clean && make
 
-# Set environment variables
-source /opt/intel/sgxsdk/environment
-```
+# Run the demo
+./bin/run_demo.sh
 
-### 2. Build Project
-
-```bash
-make clean
-make
-```
-
-### 3. Run Demo
-
-```bash
-./scripts/run_demo.sh
+# Or use the main run script
+./bin/run.sh
 ```
 
 ## Core Features
@@ -108,36 +110,44 @@ make
 - **Detailed Documentation**: Complete usage instructions and API documentation
 - **Example Code**: Include multiple real-world usage scenario examples
 
-## Use Cases
+## Demo Use Cases
 
-1. **DeFi Protocol Verification**: Verify the execution correctness of decentralized finance protocols
-2. **Supply Chain Tracking**: Verify supply chain data in a trusted environment
-3. **Voting Systems**: Ensure privacy and integrity of electronic voting
-4. **Identity Authentication**: Securely process identity authentication data in TEE
+1. **Smart Contract Simulation**: Demonstrate basic smart contract execution in SGX enclave
+2. **Proof Generation**: Show how to generate execution proofs (mock implementation)
+3. **Enclave Attestation**: Demonstrate enclave measurement and attestation capabilities
+4. **Secure Computation**: Basic example of secure computation in trusted environment
 
 ## API Documentation
 
-### Enclave Interface
+### Demo Enclave Interface
 
 ```cpp
-// Initialize smart contract verifier
-sgx_status_t init_contract_verifier();
+// Initialize contract verifier (demo version)
+sgx_status_t ecall_init_contract_verifier();
 
-// Verify smart contract execution result
-sgx_status_t verify_contract_execution(
+// Execute smart contract (simulation)
+sgx_status_t ecall_execute_contract(
     const uint8_t* contract_code,
     size_t code_size,
     const uint8_t* input_data,
     size_t input_size,
+    uint64_t gas_limit,
     uint8_t* result,
-    size_t* result_size
+    size_t* result_size,
+    uint8_t* execution_hash
 );
 
-// Generate execution proof
-sgx_status_t generate_execution_proof(
-    const uint8_t* execution_hash,
+// Generate execution proof (mock implementation)
+sgx_status_t ecall_generate_proof(
+    uint8_t* data,
+    size_t data_size,
     uint8_t* proof,
-    size_t* proof_size
+    size_t proof_size
+);
+
+// Get enclave measurement
+sgx_status_t ecall_get_enclave_measurement(
+    uint8_t* measurement
 );
 ```
 
@@ -148,13 +158,13 @@ sgx_status_t generate_execution_proof(
 3. **Remote Attestation**: Support Intel Attestation Service for remote attestation
 4. **Rollback Attack Protection**: Implement monotonic counters to prevent rollback attacks
 
-## Performance Benchmarks
+## Demo Features
 
-| Operation | Latency | Throughput |
-|-----------|---------|------------|
-| Contract Verification | < 1ms | 10,000 TPS |
-| Data Sealing | < 0.1ms | 100,000 ops/s |
-| Remote Attestation | < 100ms | 100 proofs/s |
+This is a simplified demonstration version that includes:
+- Basic smart contract execution simulation
+- Simple proof generation (mock implementation)
+- Enclave measurement retrieval
+- Basic attestation report creation
 
 ## Contributing
 

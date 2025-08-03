@@ -36,8 +36,13 @@ sgx_status_t generate_key_pair(key_pair_t* key_pair, key_type_t type) {
             // 生成ECC密钥对
             sgx_ec256_private_t private_key;
             sgx_ec256_public_t public_key;
+            sgx_ecc_state_handle_t ecc_handle;
             
-            ret = sgx_ecc256_create_key_pair(&private_key, &public_key, sgx_ecc256_open_context());
+            ret = sgx_ecc256_open_context(&ecc_handle);
+            if (ret != SGX_SUCCESS) break;
+            
+            ret = sgx_ecc256_create_key_pair(&private_key, &public_key, ecc_handle);
+            sgx_ecc256_close_context(ecc_handle);
             if (ret != SGX_SUCCESS) break;
             
             memcpy(key_pair->private_key, &private_key, sizeof(private_key));

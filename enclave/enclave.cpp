@@ -49,6 +49,44 @@ sgx_status_t ecall_init_contract_verifier(void) {
 }
 
 /**
+ * 生成执行证明
+ */
+sgx_status_t ecall_generate_proof(
+    uint8_t* data,
+    size_t data_size,
+    uint8_t* proof,
+    size_t proof_size
+) {
+    if (!data || !proof || data_size == 0 || proof_size < 64) {
+        return SGX_ERROR_INVALID_PARAMETER;
+    }
+    
+    // 模拟证明生成
+    memset(proof, 0xAB, proof_size);
+    
+    return SGX_SUCCESS;
+}
+
+/**
+ * 创建远程证明报告
+ */
+sgx_status_t ecall_create_report(
+    uint8_t* report_data,
+    size_t data_size,
+    uint8_t* report_buffer,
+    size_t report_size
+) {
+    if (!report_data || !report_buffer || data_size == 0 || report_size < 432) {
+        return SGX_ERROR_INVALID_PARAMETER;
+    }
+    
+    // 模拟报告创建
+    memset(report_buffer, 0xCD, report_size);
+    
+    return SGX_SUCCESS;
+}
+
+/**
  * 验证智能合约执行
  */
 sgx_status_t ecall_verify_contract_execution(
@@ -157,7 +195,7 @@ sgx_status_t ecall_generate_execution_proof(
     memcpy(proof_data, &proof, sizeof(proof_data));
     
     sgx_ec256_private_t private_key;
-    ret = generate_key_pair(&private_key, &proof.public_key);
+    ret = generate_ec256_key_pair(&private_key, &proof.public_key);
     if (ret != SGX_SUCCESS) {
         sgx_ecc256_close_context(ecc_handle);
         return ret;

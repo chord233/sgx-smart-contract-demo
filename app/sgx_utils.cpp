@@ -156,12 +156,10 @@ app_status_t SGXSmartContractApp::generate_execution_proof(const SmartContract& 
     ret = ecall_generate_proof(
         enclave_id,
         &enclave_ret,
-        contract.bytecode.data(),
+        const_cast<uint8_t*>(contract.bytecode.data()),
         contract.bytecode.size(),
-        input_data.empty() ? nullptr : input_data.data(),
-        input_data.size(),
         proof_data,
-        &proof_size
+        proof_size
     );
     
     if (ret != SGX_SUCCESS || enclave_ret != SGX_SUCCESS) {
@@ -184,7 +182,7 @@ app_status_t SGXSmartContractApp::get_enclave_measurement(std::vector<uint8_t>& 
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
     sgx_status_t enclave_ret = SGX_ERROR_UNEXPECTED;
     
-    ret = ecall_get_measurement(enclave_id, &enclave_ret, measurement_data);
+    ret = ecall_get_enclave_measurement(enclave_id, &enclave_ret, measurement_data);
     
     if (ret != SGX_SUCCESS || enclave_ret != SGX_SUCCESS) {
         return APP_ERROR_ENCLAVE_CALL;
@@ -216,8 +214,9 @@ app_status_t SGXSmartContractApp::create_attestation_report(const std::vector<ui
         enclave_id,
         &enclave_ret,
         report_data,
+        sizeof(report_data),
         report_buffer,
-        &report_size
+        report_size
     );
     
     if (ret != SGX_SUCCESS || enclave_ret != SGX_SUCCESS) {

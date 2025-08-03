@@ -212,12 +212,10 @@ bool generate_execution_proof(const std::vector<uint8_t>& bytecode, const std::v
     ret = ecall_generate_proof(
         global_eid,
         &enclave_ret,
-        bytecode.data(),
+        const_cast<uint8_t*>(bytecode.data()),
         bytecode.size(),
-        input_data.empty() ? nullptr : input_data.data(),
-        input_data.size(),
         proof_data,
-        &proof_size
+        proof_size
     );
     
     if (ret != SGX_SUCCESS || enclave_ret != SGX_SUCCESS) {
@@ -255,7 +253,7 @@ bool get_enclave_measurement() {
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
     sgx_status_t enclave_ret = SGX_ERROR_UNEXPECTED;
     
-    ret = ecall_get_measurement(global_eid, &enclave_ret, measurement);
+    ret = ecall_get_enclave_measurement(global_eid, &enclave_ret, measurement);
     
     if (ret != SGX_SUCCESS || enclave_ret != SGX_SUCCESS) {
         std::cerr << "Failed to get measurement: 0x" << std::hex << ret << ", 0x" << enclave_ret << std::endl;
@@ -300,8 +298,9 @@ bool create_attestation_report() {
         global_eid,
         &enclave_ret,
         report_data,
+        sizeof(report_data),
         report,
-        &report_size
+        report_size
     );
     
     if (ret != SGX_SUCCESS || enclave_ret != SGX_SUCCESS) {
@@ -331,39 +330,11 @@ void show_menu() {
     std::cout << "3. Generate execution proof" << std::endl;
     std::cout << "4. Get enclave measurement" << std::endl;
     std::cout << "5. Create attestation report" << std::endl;
-    std::cout << "6. Run performance benchmark" << std::endl;
     std::cout << "0. Exit" << std::endl;
     std::cout << "Choose an option: ";
 }
 
-/**
- * 性能基准测试
- */
-void run_benchmark() {
-    std::cout << "\n=== Performance Benchmark ===" << std::endl;
-    
-    auto bytecode = create_sample_contract();
-    std::vector<uint8_t> input_data;
-    
-    const int iterations = 100;
-    auto start_time = std::chrono::high_resolution_clock::now();
-    
-    for (int i = 0; i < iterations; i++) {
-        if (!execute_smart_contract(bytecode, input_data)) {
-            std::cerr << "Benchmark failed at iteration " << i << std::endl;
-            return;
-        }
-    }
-    
-    auto end_time = std::chrono::high_resolution_clock::now();
-    auto total_duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-    
-    std::cout << "Benchmark completed:" << std::endl;
-    std::cout << "Total iterations: " << iterations << std::endl;
-    std::cout << "Total time: " << total_duration.count() << " microseconds" << std::endl;
-    std::cout << "Average time per execution: " << (total_duration.count() / iterations) << " microseconds" << std::endl;
-    std::cout << "Throughput: " << (iterations * 1000000.0 / total_duration.count()) << " executions/second" << std::endl;
-}
+// 性能基准测试功能已移除，保持演示版本简洁
 
 /**
  * 主函数
@@ -418,10 +389,6 @@ int main(int argc, char* argv[]) {
                 
             case 5:
                 create_attestation_report();
-                break;
-                
-            case 6:
-                run_benchmark();
                 break;
                 
             case 0:

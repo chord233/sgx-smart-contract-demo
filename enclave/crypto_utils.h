@@ -16,7 +16,9 @@ extern "C" {
 #define ECC_KEY_SIZE 32
 #define HMAC_KEY_SIZE 32
 #define SIGNATURE_SIZE 64
+#ifndef NONCE_SIZE
 #define NONCE_SIZE 12
+#endif
 
 // 密钥类型
 typedef enum {
@@ -46,7 +48,7 @@ typedef struct {
 typedef struct {
     key_pair_t key_pair;
     uint8_t signature[SIGNATURE_SIZE];
-    bool signed;
+    bool is_signed;
 } signature_context_t;
 
 // HMAC上下文
@@ -246,6 +248,8 @@ sgx_status_t derive_key_pbkdf2(
     uint8_t* derived_key
 );
 
+#ifndef SECURE_MEM_FUNCTIONS_DECLARED
+#define SECURE_MEM_FUNCTIONS_DECLARED
 /**
  * 安全内存比较
  * @param a 内存块A
@@ -261,6 +265,7 @@ int secure_memcmp(const void* a, const void* b, size_t size);
  * @param size 清零大小
  */
 void secure_memzero(void* ptr, size_t size);
+#endif
 
 /**
  * 安全内存拷贝

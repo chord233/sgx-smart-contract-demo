@@ -166,12 +166,12 @@ sgx_status_t validate_contract_code(const uint8_t* code, size_t size);
 sgx_status_t compute_execution_hash(const contract_execution_context_t* context, sgx_sha256_hash_t* hash);
 
 /**
- * 生成密钥对
+ * 生成ECC256密钥对
  * @param private_key 私钥输出
  * @param public_key 公钥输出
  * @return SGX状态码
  */
-sgx_status_t generate_key_pair(sgx_ec256_private_t* private_key, sgx_ec256_public_t* public_key);
+sgx_status_t generate_ec256_key_pair(sgx_ec256_private_t* private_key, sgx_ec256_public_t* public_key);
 
 /**
  * 安全内存清零

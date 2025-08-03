@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// Gas成本表
+// 简化的Gas成本表（演示版本）
 static const uint64_t GAS_COSTS[] = {
     [OP_NOP] = 1,
     [OP_PUSH] = 3,
@@ -16,24 +16,8 @@ static const uint64_t GAS_COSTS[] = {
     [OP_ADD] = 3,
     [OP_SUB] = 3,
     [OP_MUL] = 5,
-    [OP_DIV] = 5,
-    [OP_MOD] = 5,
-    [OP_AND] = 3,
-    [OP_OR] = 3,
-    [OP_XOR] = 3,
-    [OP_NOT] = 3,
-    [OP_EQ] = 3,
-    [OP_LT] = 3,
-    [OP_GT] = 3,
-    [OP_JMP] = 8,
-    [OP_JMPIF] = 10,
-    [OP_CALL] = 40,
-    [OP_RET] = 5,
-    [OP_LOAD] = 200,
-    [OP_STORE] = 5000,
-    [OP_HASH] = 30,
-    [OP_VERIFY] = 3000,
     [OP_HALT] = 0
+    // 其他操作码已简化
 };
 
 /**

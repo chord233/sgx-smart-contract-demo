@@ -1,10 +1,11 @@
 {
   "project": {
     "name": "SGX Smart Contract Demo",
-    "version": "1.0.0",
-    "description": "Intel SGX demonstration for smart contract verification in TEE",
+    "version": "1.0.0-demo",
+    "description": "Simplified Intel SGX demonstration for educational purposes - smart contract verification in TEE",
     "author": "Chord",
-    "license": "MIT"
+    "license": "MIT",
+    "demo_mode": true
   },
   "sgx": {
     "sdk_path": "/opt/intel/sgxsdk",
@@ -36,27 +37,7 @@
       "POP": 2,
       "ADD": 3,
       "SUB": 3,
-      "MUL": 5,
-      "DIV": 5,
-      "MOD": 5,
-      "AND": 3,
-      "OR": 3,
-      "XOR": 3,
-      "NOT": 3,
-      "EQ": 3,
-      "LT": 3,
-      "GT": 3,
-      "JMP": 8,
-      "JMPIF": 10,
-      "CALL": 40,
-      "RET": 5,
-      "LOAD": 200,
-      "STORE": 5000,
-      "HASH": 30,
-      "VERIFY": 3000,
-      "ECRECOVER": 3000,
-      "BALANCE": 400,
-      "TRANSFER": 9000
+      "MUL": 5
     }
   },
   "crypto": {
@@ -74,19 +55,16 @@
     "tag_size": 16
   },
   "performance": {
-    "benchmark_iterations": 100,
     "timeout_seconds": 30,
     "memory_limit_mb": 256,
-    "enable_profiling": true,
-    "log_performance": true
+    "enable_profiling": false,
+    "log_performance": false
   },
   "logging": {
     "level": "INFO",
-    "file": "logs/sgx_demo.log",
-    "max_file_size_mb": 10,
-    "max_files": 5,
     "console_output": true,
-    "timestamp_format": "%Y-%m-%d %H:%M:%S"
+    "timestamp_format": "%Y-%m-%d %H:%M:%S",
+    "enable_file_logging": false
   },
   "network": {
     "enable_remote_attestation": true,
@@ -96,11 +74,11 @@
     "enable_tls": true
   },
   "storage": {
-    "data_directory": "data",
     "contracts_directory": "contracts",
-    "logs_directory": "logs",
-    "temp_directory": "tmp",
-    "enable_encryption": true,
+    "docs_directory": "docs",
+    "config_directory": "config",
+    "bin_directory": "bin",
+    "enable_encryption": false,
     "backup_enabled": false
   },
   "security": {
@@ -112,17 +90,17 @@
     "max_audit_log_size_mb": 50
   },
   "testing": {
-    "enable_unit_tests": true,
-    "enable_integration_tests": true,
-    "test_data_directory": "test_data",
+    "enable_demo_tests": true,
+    "test_data_directory": "contracts",
     "mock_sgx_in_simulation": true,
-    "generate_test_reports": true
+    "generate_test_reports": false
   },
   "development": {
     "enable_debug_output": true,
     "enable_verbose_logging": false,
     "enable_memory_debugging": false,
-    "enable_performance_counters": true,
-    "auto_rebuild_on_change": false
+    "enable_performance_counters": false,
+    "auto_rebuild_on_change": false,
+    "demo_mode": true
   }
 }

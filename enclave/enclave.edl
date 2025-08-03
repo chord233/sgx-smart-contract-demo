@@ -16,6 +16,18 @@ enclave {
         public sgx_status_t ecall_get_enclave_measurement(
             [out, count=32] uint8_t* measurement
         );
+        public sgx_status_t ecall_generate_proof(
+            [in, count=data_size] uint8_t* data,
+            size_t data_size,
+            [out, count=proof_size] uint8_t* proof,
+            size_t proof_size
+        );
+        public sgx_status_t ecall_create_report(
+            [in, count=data_size] uint8_t* report_data,
+            size_t data_size,
+            [out, count=report_size] uint8_t* report_buffer,
+            size_t report_size
+        );
         public sgx_status_t ecall_destroy_enclave(void);
     };
 
