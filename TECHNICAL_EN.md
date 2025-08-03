@@ -322,9 +322,7 @@ For questions or support, please contact the development team or create an issue
 
 ---
 
-## 语言版本
+## Language Versions
 
 - [中文版本 (Chinese)](TECHNICAL.md)
 - [English Version](TECHNICAL_EN.md)
-- [项目说明中文版 (Project README Chinese)](README.md)
-- [Project README English](README_EN.md)

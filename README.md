@@ -181,3 +181,12 @@ sgx_status_t generate_execution_proof(
 
 ---
 
+## 语言版本
+
+- [中文版本 (Chinese)](README.md)
+- [English Version](README_EN.md)
+- [技术文档中文版 (Technical Documentation Chinese)](TECHNICAL.md)
+- [Technical Documentation English](TECHNICAL_EN.md)
+
+---
+
